@@ -150,8 +150,8 @@ public class Data {
 
         private int converteDataParaDias(Data data) {
                 int dias;
-                dias = converteAnosParaDias(data.getAno()) + converteMesParaDias(data.getMes(), data.getAno())
-                                + data.getDia();
+                dias = converteAnosParaDias(data.getAno())
+                                + converteMesParaDias(data.getMes(), data.getAno() + data.getDia());
                 return dias;
         }
 
@@ -160,183 +160,93 @@ public class Data {
                 return dias;
         }
 
-        private int converteDiasParaMes(int dias, int ano) {
-                int mes;
-                boolean bix = ano % 4 == 0;
-                if (dias <= 31) {
-                        mes = 1;
-                } else if (bix) {
-                        if (dias <= 60) {
-                                mes = 2;
-                        } else if (dias <= 91) {
-                                mes = 3;
-                        } else if (dias <= 121) {
-                                mes = 4;
-                        } else if (dias <= 152) {
-                                mes = 5;
-                        } else if (dias <= 182) {
-                                mes = 6;
-                        } else if (dias <= 213) {
-                                mes = 7;
-                        } else if (dias <= 244) {
-                                mes = 8;
-                        } else if (dias <= 274) {
-                                mes = 9;
-                        } else if (dias <= 305) {
-                                mes = 10;
-                        } else if (dias <= 335) {
-                                mes = 11;
-                        } else {
-                                mes = 12;
-                        }
-                } else {
-                        if (dias <= 59) {
-                                mes = 2;
-                        } else if (dias <= 90) {
-                                mes = 3;
-                        } else if (dias <= 120) {
-                                mes = 4;
-                        } else if (dias <= 151) {
-                                mes = 5;
-                        } else if (dias <= 181) {
-                                mes = 6;
-                        } else if (dias <= 212) {
-                                mes = 7;
-                        } else if (dias <= 243) {
-                                mes = 8;
-                        } else if (dias <= 273) {
-                                mes = 9;
-                        } else if (dias <= 304) {
-                                mes = 10;
-                        } else if (dias <= 334) {
-                                mes = 11;
-                        } else {
-                                mes = 12;
-                        }
-                }
-                return mes;
-        }
-
         private int converteMesParaDias(int mes, int ano) {
-                boolean bix = ano % 4 == 0;
-                int dias;
-                if (bix) {
-                        switch (mes) {
-                                case 2:
-                                        dias = 31;
-                                        break;
-                                case 3:
-                                        dias = 60;
-                                        break;
-                                case 4:
-                                        dias = 91;
-                                        break;
-                                case 5:
-                                        dias = 121;
-                                        break;
-                                case 6:
-                                        dias = 152;
-                                        break;
-                                case 7:
-                                        dias = 182;
-                                        break;
-                                case 8:
-                                        dias = 213;
-                                        break;
-                                case 9:
-                                        dias = 244;
-                                        break;
-                                case 10:
-                                        dias = 274;
-                                        break;
-                                case 11:
-                                        dias = 305;
-                                        break;
-                                case 12:
-                                        dias = 335;
-                                        break;
-                                default:
-                                        dias = 0;
-                                        break;
-                        }
-                } else {
-                        switch (mes) {
-                                case 2:
-                                        dias = 31;
-                                        break;
-                                case 3:
-                                        dias = 59;
-                                        break;
-                                case 4:
-                                        dias = 90;
-                                        break;
-                                case 5:
-                                        dias = 120;
-                                        break;
-                                case 6:
-                                        dias = 151;
-                                        break;
-                                case 7:
-                                        dias = 181;
-                                        break;
-                                case 8:
-                                        dias = 212;
-                                        break;
-                                case 9:
-                                        dias = 243;
-                                        break;
-                                case 10:
-                                        dias = 273;
-                                        break;
-                                case 11:
-                                        dias = 304;
-                                        break;
-                                case 12:
-                                        dias = 334;
-                                        break;
-                                default:
-                                        dias = 0;
-                                        break;
-                        }
-
+                int dias = 0;
+                for (int m = 1; m < mes; m++) {
+                        dias = quantidadeDiasMes(m, ano);
                 }
                 return dias;
         }
 
-        private int converteDiasParaAnos(int dias) {
-                int anos = (dias - (dias / 1460)) / 365;
-                return anos;
+        public int quantidadeDiasMes(int mes, int ano) {
+                int dias;
+                boolean bix = ano % 4 == 0;
+                switch (mes) {
+                        case 1:
+                                dias = 31;
+                                break;
+                        case 2:
+                                dias = 28;
+                                break;
+                        case 3:
+                                dias = 31;
+                                break;
+                        case 4:
+                                dias = 30;
+                                break;
+                        case 5:
+                                dias = 31;
+                                break;
+                        case 6:
+                                dias = 30;
+                                break;
+                        case 7:
+                                dias = 31;
+                                break;
+                        case 8:
+                                dias = 31;
+                                break;
+                        case 9:
+                                dias = 30;
+                                break;
+                        case 10:
+                                dias = 31;
+                                break;
+                        case 11:
+                                dias = 30;
+                                break;
+                        case 12:
+                                dias = 31;
+                                break;
+                        default:
+                                dias = 0;
+                                break;
+                }
+                if (mes == 2 && bix) {
+                        dias++;
+                }
+                return dias;
         }
 
         public void adicionarDias(int dias) {
-                int somaDias;
-                int novoAno;
-                int novoMes;
-                int novoDia;
-                somaDias = converteDataParaDias(this) + dias;
-                novoAno = converteDiasParaAnos(somaDias);
-                novoMes = converteDiasParaMes((somaDias - converteAnosParaDias(novoAno)), novoAno);
-                novoDia = somaDias - converteMesParaDias(novoMes, novoAno) - converteAnosParaDias(novoAno);
-                setAno(novoAno);
+                int novoMes = getMes();
+                int novoAno = getAno();
+                int novoDia = getDia();
+                while (dias > 0) {
+                        while (novoDia <= quantidadeDiasMes(novoMes, novoAno)) {
+                                novoDia++;
+                        }
+                        novoMes++;
+                        novoDia = 1;
+                        dias--;
+                        if (novoMes > 12) {
+                                novoAno++;
+                                novoMes = 1;
+                        }
+                }
+                setDia(novoDia);
                 setMes(novoMes);
-                if(novoDia == 0) {
-                        setDia(novoDia + 1);
-                }
-                else {
-                        setDia(novoDia);
-                }
+                setAno(novoAno);
         }
 
         public void compararDatas(Data data) {
                 int diferencaDias;
                 int dias = converteDataParaDias(data);
                 int diasObj = converteDataParaDias(this);
-
                 diferencaDias = dias - diasObj;
                 if (diferencaDias < 0) {
                         diferencaDias = diferencaDias * (-1);
                 }
-
                 System.out.println("A diferença entre as datas em dias é " + diferencaDias + " dias");
         }
 }
