@@ -151,7 +151,7 @@ public class Data {
         private int converteDataParaDias(Data data) {
                 int dias;
                 dias = converteAnosParaDias(data.getAno())
-                                + converteMesParaDias(data.getMes(), data.getAno() + data.getDia());
+                                + converteMesParaDias(data.getMes(), data.getAno()) + data.getDia();
                 return dias;
         }
 
@@ -223,16 +223,16 @@ public class Data {
                 int novoAno = getAno();
                 int novoDia = getDia();
                 while (dias > 0) {
-                        while (novoDia <= quantidadeDiasMes(novoMes, novoAno)) {
-                                novoDia++;
+                        novoDia++;
+                        if (novoDia > quantidadeDiasMes(novoMes, novoAno)) {
+                                novoMes++;
+                                novoDia = 1;
                         }
-                        novoMes++;
-                        novoDia = 1;
-                        dias--;
                         if (novoMes > 12) {
                                 novoAno++;
                                 novoMes = 1;
                         }
+                        dias--;
                 }
                 setDia(novoDia);
                 setMes(novoMes);
