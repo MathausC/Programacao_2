@@ -163,7 +163,7 @@ public class Data {
         private int converteMesParaDias(int mes, int ano) {
                 int dias = 0;
                 for (int m = 1; m < mes; m++) {
-                        dias = quantidadeDiasMes(m, ano);
+                        dias += quantidadeDiasMes(m, ano);
                 }
                 return dias;
         }
