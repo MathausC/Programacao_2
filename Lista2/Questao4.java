@@ -55,5 +55,4 @@ public class Questao4 {
         int soma = somaValoresVet(vet);
         int percentual = (vet[index] * 100) / soma;
         return percentual;
-    }
-}
+    }}
