@@ -45,7 +45,7 @@ public class Questao1 {
         for(int i = 0; i < vet.length; i++) {
             System.out.println("Informe o valor do mês " + mes + ":");
             vet[i] = in.nextDouble();
-            while(vat[i] < 0) {
+            while(vet[i] < 0) {
                 System.out.println("Valor incorreto.");
                 System.out.println("Informe o valor do mês " + mes + ":");
                 vet[i] = in.nextDouble();
