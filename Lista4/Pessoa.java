@@ -98,4 +98,15 @@ public class Pessoa {
         }
         return pesoIdeal;
     }
+
+    public String toString() {
+        String mensagem;
+        mensagem = "Nome: " + getNome() + "\n" + 
+                   "Idade: " + getIdade() + "\n" +
+                   "Gênero: " + getGenero() + "\n" +
+                   "Peso: " + getPeso() + "\n" +
+                   "Altura: " + getAltura() + "/n" +
+                   "Peso Ideal: " +getPesoIdeal() + "\n";
+        return mensagem;
+    }
 }

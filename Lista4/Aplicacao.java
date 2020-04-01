@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Aplicacao {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        Pessoa[] pessoas = new Pessoa[5];
+        Pessoa[] pessoas = new Pessoa[20];
         System.out.println("Vamos preencher o vetor de 20 pessoas.");
         preencheVetorPessoas(pessoas, in);
         System.out.println("Vamos exibir os dados das pessoas.");
@@ -57,13 +57,8 @@ public class Aplicacao {
 
     public static void exibeDadosVetor(Pessoa[] pessoas) {
         for(int cont = 0; cont < pessoas.length; cont++) {
-            System.out.println("Dados da pessoa " + (cont+ 1) + ":");
-            System.out.println("Nome: " + pessoas[cont].getNome());
-            System.out.println("Idade: " + pessoas[cont].getIdade());
-            System.out.println("Gênero: " + pessoas[cont].getGenero());
-            System.out.println("Peso: " + pessoas[cont].getPeso());
-            System.out.println("Altura: " + pessoas[cont].getAltura());
-            System.out.println("Peso Ideal: " + pessoas[cont].getPesoIdeal());
+            System.out.println("Dados da pessoa " + (cont + 1) + ":");
+            System.out.println(pessoas[cont].toString());
             System.out.println();
         }
         System.out.println("Fim da exibição");
