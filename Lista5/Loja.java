@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class Loja {
     private Produto[] prods;
     private int qProds;
+    Scanner in = new Scanner(System.in);   
 
     public int getQuantidadeProdutos() {
         return qProds;
@@ -16,11 +17,12 @@ public class Loja {
         prods = new Produto[i];
     }
 
-    public void cadastrarProduto(String codigo) {
-        Scanner in = new Scanner(System.in);
-        boolean nCadas = !verifCodExiste(codigo);
+    public void cadastrarProduto() { 
         if(qProds < prods.length){
-            if(nCadas) {
+            System.out.print("Informe o código do produto: ");
+            String codigo = in.nextLine();
+            int i = buscar(codigo);
+            if(i == -1) {
                 prods[qProds] = new Produto(codigo);
                 System.out.print("Descrição do produto: ");
                 String d = in.nextLine();
@@ -69,98 +71,94 @@ public class Loja {
     public void exibeProdutosFornecedor(String fornecedor) {
         boolean f = true;
         for(int i = 0; i < qProds; i++) {
-            if(prods[i].getFornecedor().equals(fornecedor)) {
+            if(prods[i].getFornecedor().equalsIgnoreCase(fornecedor)) {
                 System.out.println(prods[i]);
                 f = false;
             }
         }
         if(f) {
-            System.out.println("Não há produtos deste fornecedor.");
+            System.out.println("Não há produtos deste fornecedor." + "\n");
         }
     }
 
     public void alteraPrecoProduto(String codigo, double percentual, char tipoAlteracao) {
-        for(int i = 0; i < qProds; i++) {
-            if(prods[i].getCodigo().equals(codigo)) {
-                double p = prods[i].getPreco();
-                if(percentual <= 0) {
-                    System.out.println("Percental deve ser maior que zero.");
+        int i = buscar(codigo);
+        if(i == -1) {
+            System.out.println("Produto não cadastrado." + "\n");
+        }
+        else {
+            double p = prods[i].getPreco();
+            if(percentual <= 0) {
+                System.out.println("Percental deve ser maior que zero." + "\n");
+            }
+            else {
+                if(tipoAlteracao != '1' && tipoAlteracao != '2') {
+                    System.out.println("Tipo de alteração inválida." + "\n");
+                }
+                else if(tipoAlteracao == '1'){
+                    p *= (1 + (percentual/100));
+                }
+                else if(percentual < 100){
+                    p *= (1 - (percentual/100));
                 }
                 else {
-                    if(tipoAlteracao != '1' && tipoAlteracao != '2') {
-                        System.out.println("Tipo de alteração inválida.");
-                    }
-                    else if(tipoAlteracao == '1'){
-                        p *= (1 + (percentual/100));
-                    }
-                    else if(percentual < 100){
-                        p *= (1 - (percentual/100));
-                    }
-                    else {
-                        System.out.println("O desconto não pode ser maior ou igual a 100%");
-                    }
+                    System.out.println("O desconto não pode ser maior ou igual a 100%" + "\n");
                 }
-                prods[i].setPreco(p);
-                i = qProds;
             }
-        }
-        if(!verifCodExiste(codigo)){
-            System.out.println("Código do produto não existe.");
+            prods[i].setPreco(p);
         }
     }
 
-    private boolean verifCodExiste(String c) {
-        boolean v = false;
+    private int buscar(String c) {
+        int v = -1;
         for(int i = 0; i < qProds; i++) {
-            if(prods[i].getCodigo().equals(c)) {
-                v = true;
-                i = qProds;
+            if(prods[i].getCodigo().equalsIgnoreCase(c)) {
+                v = i;
+                break;
             }
         }
         return v;
     }
 
     public void atualizaEstoque(String codigo, int quantidade) {
+        
         if(quantidade > 0) {
-            for(int i = 0; i < qProds; i++) {
-                if(prods[i].getCodigo().equals(codigo)) {
-                    int e = prods[i].getEstoque();
-                    prods[i].setEstoque(e + quantidade);
-                    i = qProds;
-                }
+            int i = buscar(codigo);
+            if(i == -1) {
+                System.out.println("Produto não cadastrado." + "\n");
             }
-            if(!verifCodExiste(codigo)){
-                System.out.println("Código não existe.");
+            else {
+                int e = prods[i].getEstoque();
+                prods[i].setEstoque(e + quantidade);
             }
         }
         else {
-            System.out.println("A quantidade a ser acrencentada deve ser maior que zero.");
+            System.out.println("A quantidade a ser acrencentada deve ser maior que zero." + "\n");
         }
     }
 
     public void realizaVenda(String codigo, int quantidade) {
         double p = 0;
+        int i = buscar(codigo);
         if(quantidade > 0) {
-            for(int i = 0; i < qProds; i++) {
-                if(prods[i].getCodigo().equals(codigo)) {
-                    if(quantidade <= prods[i].getEstoque()) {
-                        p = prods[i].getPreco() * quantidade;
-                        int e = prods[i].getEstoque();
-                        prods[i].setEstoque(e - quantidade);
-                        System.out.println("A total a pagar é: R$" + p);
-                    }
-                    else {
-                        System.out.println("Não há esta quantidade em estoque.");
-                    }
-                    i = qProds;
-                }
+            if(i == -1) {
+                System.out.println("Produto não cadastrado." + "\n");
             }
-            if(!verifCodExiste(codigo)) {
-                System.out.println("Código não existente.");
+            else {
+                if(quantidade <= prods[i].getEstoque()) {
+                    p = prods[i].getPreco() * quantidade;
+                    int e = prods[i].getEstoque();
+                    prods[i].setEstoque(e - quantidade);
+                    System.out.println("A total a pagar é: R$" + p + "\n");
+                }
+                else {
+                    System.out.println("Não há esta quantidade em estoque." + "\n");
+                }
+                i = qProds;
             }
         }
         else {
-            System.out.println("A quantidade deve ser maior que zero.");
+            System.out.println("A quantidade deve ser maior que zero." + "\n");
         }
     }
 }
