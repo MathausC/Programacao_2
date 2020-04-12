@@ -3,6 +3,9 @@ import java.util.Scanner;
 public class Aplicacao {
     static Scanner in = new Scanner(System.in);
     public static void main(String[] args) {
+        System.out.println("z".compareTo("a"));
+        System.out.println("a".compareTo("z"));
+        System.out.println(9/2);
         char r;
         String m;
         System.out.print("Informe a quantidade de funcionarios: ");

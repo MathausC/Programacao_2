@@ -56,7 +56,8 @@ public class Cadastro {
         int meio;
         int posicao = -1;
         while(inicio <= fim) {
-            meio = (fim - inicio)/2;
+
+            meio = ((fim + inicio)/2);
             if(chave.compareTo(vetF[meio].getMatricula()) == 0) {
                 posicao =  meio;
             }
