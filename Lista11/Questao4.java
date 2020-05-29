@@ -2,17 +2,18 @@ package Programacao_2.Lista11;
 import java.util.Scanner;
 
 public class Questao4 {
-    static Scanner in = new Scanner(System.in);
-    static String[] nomes = new String[10];
-    static double[][] notas = new double[10][5];
 
     public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        String[] nomes = new String[10];
+        double[][] notas = new double[10][5];
         System.out.println("Vamos preencher as notas dos alunos.");
-        preencheMatriz();
-        exibirRelatorio();
+        preencheMatriz(nomes, notas);
+        exibirRelatorio(nomes, notas);
     }
 
-    public static void preencheMatriz() {
+    public static void preencheMatriz(String[] nomes, double[][] notas) {
+        Scanner in = new Scanner(System.in);
         for(int i = 0; i < nomes.length; i++) {
             System.out.print("Informe o nome do aluno: ");
             nomes[i] = in.nextLine();
@@ -28,7 +29,7 @@ public class Questao4 {
         }
     }
 
-    public static void exibirRelatorio() {
+    public static void exibirRelatorio(String[] nomes, double[][] notas) {
         System.out.println("Relatório dos alunos:");
         for(int i = 0; i < nomes.length; i++) {
             System.out.println("A menor nota do aluno " + nomes[i] + " foi " + menorNota(notas[i]) + ".");

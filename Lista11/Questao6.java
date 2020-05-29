@@ -2,38 +2,38 @@ package Programacao_2.Lista11;
 import java.util.Scanner;
 
 public class Questao6 {
-    static Scanner in = new Scanner(System.in);
-    static double[][] ganhos = new double[9][13];
 
     public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        double[][] ganhos = new double[9][13];
         char resp;
         double fMedio, fFruta, fMes, fAnual;
         String palavra;
         System.out.println("Vamos preencher a tabela das vendas de frutas do mercado por mês.");
-        preencherMatriz();
+        preencherMatriz(ganhos);
         System.out.println("Vamos agora para as opções.");
         do{
             exibirMenu();
             resp = in.next().charAt(0); in.nextLine();
             switch (resp) {
                 case '1':
-                    fMedio = calcularMediaGanhosPorMes();
+                    fMedio = calcularMediaGanhosPorMes(ganhos);
                     System.out.println("Faturamento médio por mês: R$" + fMedio);
                     break;
                 case '2':
                     System.out.print("Infome o nome da fruta: ");
                     palavra = in.nextLine();
-                    fFruta = faturamentoFrutaAno(palavra);
+                    fFruta = faturamentoFrutaAno(palavra, ganhos);
                     System.out.println("Faturamento por venda de " + palavra + ": R$" + fFruta);
                     break;
                 case '3':
                     System.out.print("Informe o mês do faturamento: ");
                     palavra = in.nextLine();
-                    fMes = faturamentoMes(palavra);
+                    fMes = faturamentoMes(palavra, ganhos);
                     System.out.println("Faturamento do mes " + palavra + ": R$" + fMes);
                     break;
                 case '4':
-                    fAnual = faturamentoAnual();
+                    fAnual = faturamentoAnual(ganhos);
                     System.out.println("Faturamento anual: R$" + fAnual);
                     break;
                 case '0': System.out.println("Obrigado e até mais."); break;
@@ -53,7 +53,8 @@ public class Questao6 {
         System.out.print(mensagem);
     }
 
-    public static void preencherMatriz() {
+    public static void preencherMatriz(double[][] ganhos) {
+        Scanner in = new Scanner(System.in);
         String fruta, mes;
         double somaMes;
         int mesN = 0;
@@ -108,7 +109,7 @@ public class Questao6 {
         }
     }
 
-    public static double calcularMediaGanhosPorMes() {
+    public static double calcularMediaGanhosPorMes(double[][] ganhos) {
         double media;
         int ultLin = ganhos.length - 1;
         int ultCol = ganhos[ultLin].length - 1;
@@ -116,7 +117,7 @@ public class Questao6 {
         return media;
     }
 
-    public static double faturamentoFrutaAno(String fruta) {
+    public static double faturamentoFrutaAno(String fruta, double[][] ganhos) {
         int index = convertStringParaIndexFrut(fruta);
         int ultCol = ganhos[index].length - 1;
         double f;
@@ -162,7 +163,7 @@ public class Questao6 {
         return index;
     }
 
-    public static double faturamentoMes(String mes) {
+    public static double faturamentoMes(String mes, double[][] ganhos) {
         int index = convertStringParaIndexMes(mes);
         int ultLin = ganhos.length - 1;
         double f;
@@ -221,7 +222,7 @@ public class Questao6 {
         return index;
     }
 
-    public static double faturamentoAnual() {
+    public static double faturamentoAnual(double[][] ganhos) {
         int ultLin = ganhos.length - 1;
         int ultCol = ganhos[ultLin].length - 1;
         return ganhos[ultLin][ultCol];
